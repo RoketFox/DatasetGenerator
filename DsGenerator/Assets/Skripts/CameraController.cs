@@ -32,10 +32,17 @@ public class CameraController : MonoBehaviour
         }
         else
         {
+
             if (nextPoint + 1 == points.Length)
+            {
+                Debug.Log("Route completed");
                 UnityEditor.EditorApplication.isPlaying = false;
+            }
             else
+            {
+                Debug.Log("Point reached");
                 nextPoint++;
+            }
         }
     }
 

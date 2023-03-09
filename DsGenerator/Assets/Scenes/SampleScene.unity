@@ -2478,8 +2478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitForSeconds: 1
-  dsSaveFolder: 
-  datasetsFolder: 
+  dsSaveFolder: C:\Users\homeo\Documents\GitHub\DatasetGenerator\Datasets
 --- !u!4 &1775281363 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 513254297318227779, guid: ea588400978d8084680a86c6b46f70d2, type: 3}

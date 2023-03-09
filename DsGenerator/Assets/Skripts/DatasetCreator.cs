@@ -7,24 +7,29 @@ public class DatasetCreator : MonoBehaviour
 {
     [SerializeField] private float waitForSeconds = 1;
     [SerializeField] private string dsSaveFolder;
-    [SerializeField] private string datasetsFolder;
+    
+    private string currDatasetFolder;
 
     private int pictureNum = 0;
 
     private void Start()
     {
-        dsSaveFolder = Application.dataPath + dsSaveFolder;
         string[] dirs = System.IO.Directory.GetDirectories(dsSaveFolder);
         
         if (dirs.Length == 0)
         {
-            
+            currDatasetFolder = dsSaveFolder + "/Dataset_0";
         }
         else
         {
-            
+            string lastDs = dirs[dirs.Length - 1];
+            string lastDsName = lastDs.Substring(lastDs.Length - 10);
+
+            currDatasetFolder = dsSaveFolder + lastDsName.Substring(0, 9) + (Convert.ToInt32(lastDsName.Substring(9)) + 1);
         }
-        System.IO.Directory.CreateDirectory(dsSaveFolder +"/Dataset_0");
+
+        Debug.Log("Created new folder: " + currDatasetFolder);
+        System.IO.Directory.CreateDirectory(currDatasetFolder);
 
         StartCoroutine(MainLoop());
     }
@@ -51,6 +56,7 @@ public class DatasetCreator : MonoBehaviour
         screenshotTexture.Apply();
 
         byte[] byteArray = screenshotTexture.EncodeToPNG();
-        System.IO.File.WriteAllBytes(Application.dataPath + "/Datasets/Dataset_1/img_name_" + pictureNum + ".png", byteArray);
+        System.IO.File.WriteAllBytes(currDatasetFolder + "/img_name_" + pictureNum + ".png", byteArray);
+        Debug.Log("Created screenshot: " + pictureNum);
     }
 }
