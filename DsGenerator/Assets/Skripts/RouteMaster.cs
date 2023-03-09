@@ -10,12 +10,13 @@ using UnityEngine.UIElements;
 /// </summary>
 public class RouteMaster : MonoBehaviour
 {
-    [SerializeField] public Color gizmosColor = Color.white;
-    [SerializeField] public float lineThickness = 3f;
-    [SerializeField] public float pointRadius = 1f;
+    [SerializeField] private bool addAtLast = true;
 
-    [SerializeField]
-    private List<Transform> points = new List<Transform>();
+    public Color gizmosColor = Color.white;
+    public float lineThickness = 3f;
+    public float pointRadius = 1f;
+
+    public List<Transform> points = new List<Transform>();
     
     private void OnDrawGizmos()
     {
@@ -31,7 +32,7 @@ public class RouteMaster : MonoBehaviour
             }
 
             Vector3 currP = points[i].position;
-            Vector3 prevP = Vector3.zero;
+            Vector3 prevP = transform.position;
 
             if (i > 0)
                 prevP = points[i - 1].position;
@@ -55,7 +56,15 @@ public class RouteMaster : MonoBehaviour
     {
         GameObject point = new GameObject("Point" + points.Count);
         point.transform.parent = transform;
-        point.transform.position = Vector3.zero;
+        
+        if (addAtLast)
+            if (points.Count > 0)
+                point.transform.position = points[points.Count - 1].position;
+            else
+                point.transform.position = transform.position;
+        else
+            point.transform.position = transform.position;
+        
         point.AddComponent<CurrPointDrawer>();
         points.Add(point.transform);
     }
